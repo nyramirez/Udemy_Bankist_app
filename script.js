@@ -183,6 +183,50 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+// 161. Some and Every
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  // console.log('loand requested');
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // Add the move
+    currentAccount.movements.push(amount);
+
+    // Update UI
+    inputLoanAmount.value = '';
+    inputLoanAmount.blur();
+    updateUI(currentAccount);
+  }
+
+});
+
+// 160. The findIndex Method
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  // console.log(accounts);
+
+  if (currentAccount.username === inputCloseUsername.value && currentAccount.pin === Number(inputClosePin.value)) {
+    // console.log('Checked');
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+
+    // Delete Account
+    // console.log(index);
+
+    accounts.splice(index, 1);
+
+    // Hide UI
+    containerApp.style.opacity = 0;
+
+    inputCloseUsername.value = inputClosePin.value = '';
+  }
+
+
+});
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -581,3 +625,61 @@ console.log(account);
 
 // 158. Implementing Login
 // This lcture is on main containerApp, look up on top
+
+// 160. The findIndex Method
+// This lcture is on main containerApp, look up on top
+
+/*
+// 161. Some and Every
+// This lcture is on main containerApp, look up on top
+console.log(movements);
+
+// Equality
+console.log(movements.includes(-130));
+
+// SOME: Condition
+console.log(movements.some(mov => mov === -130));
+const anyDeposits = movements.some(mov => mov > 0);
+console.log(anyDeposits);
+
+// EVERY:
+console.log(movements.every(mov => mov > 0));
+console.log(account4.movements.every(mov => mov > 0));
+
+// Separate callback
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+*/
+
+/*
+// 162. Flat and flatMap
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat(2));
+
+// flat
+// Original Sequence
+// const accountMovements = accounts.map(acc => acc.movements);
+// console.log(accountMovements);
+// const allMovements = accountMovements.flat();
+// console.log(allMovements);
+// const overalBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+// console.log(overalBalance);
+
+// Sequence using chaining
+const overalBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance);
+
+// flatMap
+const overalBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overalBalance2);
+*/
+
