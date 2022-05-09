@@ -60,10 +60,12 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
 
-  movements.forEach(function (mov, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -223,9 +225,14 @@ btnClose.addEventListener('click', function (e) {
 
     inputCloseUsername.value = inputClosePin.value = '';
   }
-
-
 });
+
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
+})
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -683,3 +690,36 @@ const overalBalance2 = accounts
 console.log(overalBalance2);
 */
 
+/*
+// 163. Sorting Arrays
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort());
+console.log(owners);
+
+// Numbers
+console.log(movements);
+// The line below doe snot work
+console.log(movements.sort());
+
+// return < 0, A, B
+// return > 0, B, A
+// Ascending
+// movements.sort((a, b) => {
+//   if (a > b) return 1;
+//   else return -1
+// });
+
+// Improvement
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+// Descending
+// movements.sort((a, b) => {
+//   if (a > b) return -1;
+//   else return 1
+// });
+
+// Improvement
+movements.sort((a, b) => b - a);
+console.log(movements);
+*/
